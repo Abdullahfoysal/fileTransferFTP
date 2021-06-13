@@ -360,33 +360,5 @@ public class transferFileClient {
 
     }
 
-//    public void displayMenu() throws Exception
-//    {
-//        while(true)
-//        {    
-//            System.out.println("[ MENU ]\n");
-//            System.out.println("1. Send File\n");
-//            System.out.println("2. Receive File\n");
-//            System.out.println("3. Exit\n");
-//            System.out.print("Enter Choice :\n");
-//            int choice;
-//            choice=Integer.parseInt(br.readLine());
-//            if(choice==1)
-//            {
-//                dout.writeUTF("SEND");
-//                SendFile();
-//            }
-//            else if(choice==2)
-//            {
-//                dout.writeUTF("GET");
-//                ReceiveFile();
-//            }
-//            else
-//            {
-//                dout.writeUTF("DISCONNECT");
-//                System.exit(1);
-//            }
-//        }
-//    }
-//    
+
 }

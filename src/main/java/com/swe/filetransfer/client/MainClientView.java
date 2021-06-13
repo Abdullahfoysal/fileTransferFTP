@@ -334,6 +334,7 @@ public class MainClientView extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(MainClientView.class.getName()).log(Level.SEVERE, null, ex);
         }
+        updateList();
     }//GEN-LAST:event_downloadActionPerformed
 
     private void uploadFromClientDirectoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uploadFromClientDirectoryActionPerformed
@@ -348,6 +349,7 @@ public class MainClientView extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(MainClientView.class.getName()).log(Level.SEVERE, null, ex);
         }
+        updateList();
     }//GEN-LAST:event_uploadFromClientDirectoryActionPerformed
 
     private void choose_fileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_choose_fileButtonActionPerformed
@@ -382,6 +384,7 @@ public class MainClientView extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(MainClientView.class.getName()).log(Level.SEVERE, null, ex);
         }
+        updateList();
     }//GEN-LAST:event_chooseUploadButtonActionPerformed
 
     private void clientLocalFilesMouseClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clientLocalFilesMouseClick
@@ -414,6 +417,7 @@ public class MainClientView extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(MainClientView.class.getName()).log(Level.SEVERE, null, ex);
         }
+        updateList();
         
     }//GEN-LAST:event_deleteButtonActionPerformed
 
