@@ -213,8 +213,8 @@ public class MainClientView extends javax.swing.JFrame {
             }
         });
 
-        deleteButton.setBackground(new java.awt.Color(255, 0, 51));
-        deleteButton.setForeground(new java.awt.Color(0, 255, 204));
+        deleteButton.setBackground(new java.awt.Color(255, 51, 153));
+        deleteButton.setForeground(new java.awt.Color(102, 102, 102));
         deleteButton.setText("Delete");
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -406,7 +406,14 @@ public class MainClientView extends javax.swing.JFrame {
     }//GEN-LAST:event_refreshButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        // TODO add your handling code here:
+        try {
+            String fileName = serverFileNameTxt.getText().trim();
+         String response = transferFileClient.deleteFile(fileName);
+          errorMessage.setText("Request Status: "+ response);
+        } catch (IOException ex) {
+            Logger.getLogger(MainClientView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     /**
