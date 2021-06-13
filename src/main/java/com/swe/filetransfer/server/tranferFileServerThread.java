@@ -181,6 +181,18 @@ public class tranferFileServerThread extends Thread{
 	   
 			
 	}
+     
+    void deleteFile()throws Exception{
+         String filename=din.readUTF();
+          File f=new File(serverDirectory+"/"+filename);
+           boolean response= f.delete();
+               
+         dout.writeUTF("File Delete Successfully on server: "+response); 
+         
+         
+         
+    }
+    
     
       @Override
     public void run()
@@ -209,6 +221,11 @@ public class tranferFileServerThread extends Thread{
                 
                 dout.writeUTF(temp_names);
                 
+            }
+            else if(Command.compareTo("delete")==0){
+                 dout.writeUTF("okDelete");
+                 deleteFile();
+                 
             }
             
 //            if(Command.compareTo("GET")==0)

@@ -221,6 +221,23 @@ public class transferFileClient {
          
     }
     
+    String deleteFile(String fileName) throws IOException{
+         dout.writeUTF("delete");
+         String msgFromServer=din.readUTF();
+         if(msgFromServer.compareTo("okDelete")==0){
+             dout.writeUTF(fileName);
+             
+ 
+         msgFromServer=din.readUTF();
+        System.out.println("File Download Successfully on Client"+msgFromServer);
+        return msgFromServer;
+       }
+         return "Something went wrong";
+              
+         
+         
+    }
+    
     String getServerFile() throws IOException{
          dout.writeUTF("serverFile");
          String msgFromServer=din.readUTF();

@@ -213,8 +213,9 @@ public class MainClientView extends javax.swing.JFrame {
             }
         });
 
-        deleteButton.setBackground(new java.awt.Color(255, 51, 153));
-        deleteButton.setForeground(new java.awt.Color(102, 102, 102));
+        deleteButton.setBackground(new java.awt.Color(0, 102, 102));
+        deleteButton.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
+        deleteButton.setForeground(new java.awt.Color(153, 153, 153));
         deleteButton.setText("Delete");
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
