@@ -5,27 +5,49 @@
  */
 package com.swe.filetransfer.server;
 
+import java.io.IOException;
 import java.net.ServerSocket;
 
 /**
  *
  * @author foysalmac
  */
-public class ftpServer {
+public class FtpServer {
+    
+    public String serverDirectory="/Users/foysalmac/Desktop/server";
+    int port;
+   // public static  ServerSocket soc;
+   // public static  TranferFileServerThread transferFileServer;
+      
+    public FtpServer(int port,String serverDirectory) throws IOException{
+          this.port= port;
+          this.serverDirectory= serverDirectory;
+         // soc=new ServerSocket(port);
+          
+          System.out.println("FTP Server Started on Port Number :"+port);
+          
+//           while(true)
+//        {
+//            System.out.println("Waiting for Connection ...\n");
+//            //TransferFileServerThread t = new TransferFileServerThread(soc.accept());
+//             transferFileServer=new TranferFileServerThread(soc.accept(),serverDirectory);
+//
+//        }
+      }
     
     
      public static void main(String args[]) throws Exception
     {
-        String serverDirectory="/Users/foysalmac/Desktop/server";
-        ServerSocket soc=new ServerSocket(5217);
-        System.out.println("FTP Server Started on Port Number 5217\n");
-        while(true)
-        {
-            System.out.println("Waiting for Connection ...\n");
-            //TransferFileServerThread t = new TransferFileServerThread(soc.accept());
-            tranferFileServerThread t=new tranferFileServerThread(soc.accept(),serverDirectory);
-
-        }
-    }
+      
+//         soc=new ServerSocket(5217);
+//        System.out.println("FTP Server Started on Port Number 5217\n");
+//        while(true)
+//        {
+//            System.out.println("Waiting for Connection ...\n");
+//            //TransferFileServerThread t = new TransferFileServerThread(soc.accept());
+//             t=new tranferFileServerThread(soc.accept(),serverDirectory);
+//
+//        }
+    } 
     
 }

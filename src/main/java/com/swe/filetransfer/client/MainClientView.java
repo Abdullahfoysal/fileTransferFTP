@@ -18,7 +18,8 @@ import javax.swing.JFileChooser;
  * @author foysalmac
  */
 public class MainClientView extends javax.swing.JFrame {
-    String dir,host,port;
+    String dir,host;
+    int port;
     Socket soc;
     transferFileClient transferFileClient;
     
@@ -30,7 +31,7 @@ public class MainClientView extends javax.swing.JFrame {
     public MainClientView() {
         initComponents();
     }
-    public MainClientView(String dir,String host,String port) throws Exception {
+    public MainClientView(String dir,String host,int port) throws Exception {
       this.dir=dir;
       this.host=host;
       this.port=port;
@@ -42,7 +43,7 @@ public class MainClientView extends javax.swing.JFrame {
      
       
         try {
-            soc = new Socket("127.0.0.1",5217);
+            soc = new Socket("127.0.0.1",port);
         } catch (IOException ex) {
             Logger.getLogger(MainClientView.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -304,10 +305,11 @@ public class MainClientView extends javax.swing.JFrame {
                             .addComponent(selectFileName1)
                             .addComponent(serverFileNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(download)
-                    .addComponent(uploadFromClientDirectory)
-                    .addComponent(deleteButton))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(uploadFromClientDirectory)
+                        .addComponent(deleteButton)))
                 .addGap(49, 49, 49)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(choose_fileButton)

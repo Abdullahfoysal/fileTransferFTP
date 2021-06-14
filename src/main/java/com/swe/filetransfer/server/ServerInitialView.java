@@ -158,7 +158,8 @@ public class ServerInitialView extends javax.swing.JFrame {
         System.out.println("Client start button pressed");
         String dir = selectFileDirectoryTxt.getText().trim();
      
-        String port = portNumberTxt.getText().trim();
+       
+        int port = Integer.parseInt(portNumberTxt.getText().trim());
         dispose();
         try {
             new MainServerView(dir,port).setVisible(true);

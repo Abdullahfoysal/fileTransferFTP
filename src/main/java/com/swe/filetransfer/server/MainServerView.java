@@ -5,6 +5,13 @@
  */
 package com.swe.filetransfer.server;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+
 /**
  *
  * @author foysalmac
@@ -15,14 +22,69 @@ public class MainServerView extends javax.swing.JFrame {
      * Creates new form MainServerView
      */
     String dir;
-    String port;
+    int port;
+    Thread t;
+    ServerSocket soc;
+    
+    
+    public  TranferFileServerThread transferFileServer;
     public MainServerView() {
         initComponents();
     }
-     public MainServerView(String dir,String port) {
-        initComponents();
+    void updateUIData(){
+         String hostAddress = transferFileServer.getSocketHostAddress();
+         
+          System.out.println("FTP Server HostAddress:"+ soc.getInetAddress().getHostName());
+          System.out.println("FTP Server Started on Port Number :"+port);
+      
+        hostAddressTxt.setText(hostAddress);
+        portNumberTxt.setText(Integer.toString(port));
+        serverDirectoryTxt.setText(dir);
+        
+        listFilesonServer(new File(dir));
+    }
+     void InitFtpServer(String serverDirectory,int port) throws IOException{
+         
+          soc=new ServerSocket(port);
+          
+       
+        
+     t=   new Thread(new Runnable() {
+			@Override
+			public void run() {
+	while(true)
+        {
+            System.out.println("Waiting for Connection ...\n");
+             try {
+                  
+                    transferFileServer=new TranferFileServerThread(soc.accept(),serverDirectory);
+                    transferFileServer.setServerFileListToServer(jListServerModel);
+                 } catch (IOException ex) {
+                  Logger.getLogger(MainServerView.class.getName()).log(Level.SEVERE, null, ex);
+                 }
+
+        }
+			}
+	   });
+     t.start();
+     
+      }
+     public MainServerView(String dir,int port) throws IOException {
+        
         this.dir=dir;
         this.port=port;
+        
+        initComponents();
+        jListServer.setModel(jListServerModel);
+        InitFtpServer(dir,port);
+        
+       
+        
+            
+                 //updateUIData();
+        listFilesonServer(new File(dir));
+        
+        
     }
 
     /**
@@ -39,9 +101,12 @@ public class MainServerView extends javax.swing.JFrame {
         portNumber = new javax.swing.JLabel();
         serverDirectory = new javax.swing.JLabel();
         stopServerButton = new javax.swing.JButton();
-        restartServerButton1 = new javax.swing.JButton();
         jListServer = new javax.swing.JList<>();
         jLabelserver = new javax.swing.JLabel();
+        hostAddressTxt = new javax.swing.JLabel();
+        portNumberTxt = new javax.swing.JLabel();
+        serverDirectoryTxt = new javax.swing.JLabel();
+        refreshButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,20 +129,10 @@ public class MainServerView extends javax.swing.JFrame {
         stopServerButton.setBackground(new java.awt.Color(255, 51, 51));
         stopServerButton.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         stopServerButton.setForeground(new java.awt.Color(204, 204, 204));
-        stopServerButton.setText("Stop ");
+        stopServerButton.setText("Disconnect ");
         stopServerButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 stopServerButtonstartClientActionPerformed(evt);
-            }
-        });
-
-        restartServerButton1.setBackground(new java.awt.Color(51, 153, 0));
-        restartServerButton1.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
-        restartServerButton1.setForeground(new java.awt.Color(204, 204, 204));
-        restartServerButton1.setText("Restart");
-        restartServerButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                restartServerButton1startClientActionPerformed(evt);
             }
         });
 
@@ -95,32 +150,50 @@ public class MainServerView extends javax.swing.JFrame {
         jLabelserver.setFont(new java.awt.Font("Mshtakan", 1, 14)); // NOI18N
         jLabelserver.setText("Server file list");
 
+        hostAddressTxt.setText("127.0.0.1");
+
+        portNumberTxt.setText("9090");
+
+        serverDirectoryTxt.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        serverDirectoryTxt.setText("/Users/foysalmac/Desktop/server");
+
+        refreshButton.setBackground(new java.awt.Color(0, 204, 204));
+        refreshButton.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
+        refreshButton.setForeground(new java.awt.Color(102, 102, 102));
+        refreshButton.setText("Refresh Files");
+        refreshButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(restartServerButton1)
-                        .addGap(31, 31, 31)
-                        .addComponent(stopServerButton)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(hostIpAddress)
-                            .addComponent(portNumber)
-                            .addComponent(serverDirectory))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jListServer, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20))))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(69, 69, 69)
                 .addComponent(ServerApplication)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 143, Short.MAX_VALUE)
                 .addComponent(jLabelserver)
                 .addGap(52, 52, 52))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(portNumber)
+                    .addComponent(hostIpAddress)
+                    .addComponent(serverDirectory, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(hostAddressTxt)
+                    .addComponent(portNumberTxt)
+                    .addComponent(serverDirectoryTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(stopServerButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jListServer, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(refreshButton))
+                .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,40 +202,69 @@ public class MainServerView extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(15, 15, 15)
                         .addComponent(ServerApplication)
-                        .addGap(50, 50, 50)
-                        .addComponent(hostIpAddress)
+                        .addGap(49, 49, 49)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(hostIpAddress)
+                            .addComponent(hostAddressTxt))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(portNumber)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(portNumber)
+                            .addComponent(portNumberTxt))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(serverDirectory))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(serverDirectory)
+                            .addComponent(serverDirectoryTxt)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(26, 26, 26)
                         .addComponent(jLabelserver)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jListServer, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(restartServerButton1)
-                    .addComponent(stopServerButton))
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addComponent(stopServerButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(refreshButton)))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    DefaultListModel<String> jListServerModel = new DefaultListModel<>();
+     void  listFilesonServer(final File folder) {
+           
+	jListServerModel.clear();
+		
+	   for (final File fileEntry : folder.listFiles()) {
+		   if (!fileEntry.isDirectory()) {
+			   
+                           jListServerModel.addElement(fileEntry.getName());
+		   } 
+		  
+	   }
+          
+            
+           
+	   
+			
+	}
     private void stopServerButtonstartClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopServerButtonstartClientActionPerformed
-      
+       dispose();
+       System.exit(0); 
     }//GEN-LAST:event_stopServerButtonstartClientActionPerformed
-
-    private void restartServerButton1startClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restartServerButton1startClientActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_restartServerButton1startClientActionPerformed
 
     private void jListServerMouseEvent(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListServerMouseEvent
         // TODO add your handling code here:
         String selectedItem = (String) jListServer.getSelectedValue();
        // serverFileNameTxt.setText(selectedItem);
     }//GEN-LAST:event_jListServerMouseEvent
+
+    private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
+        // TODO add your handling code here:
+        listFilesonServer(new File(dir));
+    }//GEN-LAST:event_refreshButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -201,12 +303,15 @@ public class MainServerView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ServerApplication;
+    private javax.swing.JLabel hostAddressTxt;
     private javax.swing.JLabel hostIpAddress;
     private javax.swing.JLabel jLabelserver;
     private javax.swing.JList<String> jListServer;
     private javax.swing.JLabel portNumber;
-    private javax.swing.JButton restartServerButton1;
+    private javax.swing.JLabel portNumberTxt;
+    private javax.swing.JButton refreshButton;
     private javax.swing.JLabel serverDirectory;
+    private javax.swing.JLabel serverDirectoryTxt;
     private javax.swing.JButton stopServerButton;
     // End of variables declaration//GEN-END:variables
 }

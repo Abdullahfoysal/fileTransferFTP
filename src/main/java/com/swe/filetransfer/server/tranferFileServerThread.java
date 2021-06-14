@@ -11,21 +11,24 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.net.Socket;
+import javax.swing.DefaultListModel;
 
 /**
  *
  * @author foysalmac
  */
-public class tranferFileServerThread extends Thread{
+public class TranferFileServerThread extends Thread{
     
     Socket ClientSoc;
     DataInputStream din;
     DataOutputStream dout;
     String serverDirectory="/Users/foysalmac/Desktop/server";
+    DefaultListModel<String> jListServerModel;
 
-    tranferFileServerThread(Socket soc,String serverDirectory)
+    TranferFileServerThread(Socket soc,String serverDirector)
     {
         this.serverDirectory=serverDirectory;
+        this.jListServerModel=jListServerModel;
         try
         {
             ClientSoc=soc;                        
@@ -40,8 +43,12 @@ public class tranferFileServerThread extends Thread{
         }        
     }
     
-   
-    
+   String getSocketHostAddress(){
+       return ClientSoc.getInetAddress().getHostName();
+   }
+    void setServerFileListToServer(DefaultListModel<String> jListServerModel){
+        this.jListServerModel=jListServerModel;
+    }
     void SendFile() throws Exception
     {        
          System.out.println("asce sendFIle on server ********");
@@ -135,6 +142,8 @@ public class tranferFileServerThread extends Thread{
                 fout.close();
                
             dout.writeUTF("File Upload Successfully on server"); 
+            
+            listFilesonServer(new File(serverDirectory));
          
          
          
@@ -159,7 +168,7 @@ public class tranferFileServerThread extends Thread{
                
        dout.writeUTF("Thanks for successfully download from server"); 
          
-         
+         listFilesonServer(new File(serverDirectory));
          
     }
     
@@ -182,6 +191,23 @@ public class tranferFileServerThread extends Thread{
 			
 	}
      
+      void  listFilesonServer(final File folder) {
+           
+	jListServerModel.clear();
+		
+	   for (final File fileEntry : folder.listFiles()) {
+		   if (!fileEntry.isDirectory()) {
+			   
+                           jListServerModel.addElement(fileEntry.getName());
+		   } 
+		  
+	   }
+          
+            
+           
+	   
+			
+	}
     void deleteFile()throws Exception{
          String filename=din.readUTF();
           File f=new File(serverDirectory+"/"+filename);
@@ -189,7 +215,7 @@ public class tranferFileServerThread extends Thread{
                
          dout.writeUTF("File Delete Successfully on server: "+response); 
          
-         
+          listFilesonServer(new File(serverDirectory));
          
     }
     

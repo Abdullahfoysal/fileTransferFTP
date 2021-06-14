@@ -184,7 +184,8 @@ public class ClientInitialView extends javax.swing.JFrame {
         System.out.println("Client start button pressed");
         String dir = selectFileDirectoryTxt.getText().trim();
         String hostAddress = hostAddressTxt.getText().trim();
-        String port = portNumberTxt.getText().trim();
+        String portString = portNumberTxt.getText().trim();
+        int port = Integer.parseInt(portString);
         dispose();
         try {
             new MainClientView(dir,hostAddress,port).setVisible(true);
