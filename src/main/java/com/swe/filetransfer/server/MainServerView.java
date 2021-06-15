@@ -32,12 +32,14 @@ public class MainServerView extends javax.swing.JFrame {
         initComponents();
     }
     void updateUIData(){
-         String hostAddress = transferFileServer.getSocketHostAddress();
+        
+        //String hostAddress = transferFileServer.getSocketHostAddress();
          
-          System.out.println("FTP Server HostAddress:"+ soc.getInetAddress().getHostName());
-          System.out.println("FTP Server Started on Port Number :"+port);
+      //  System.out.println("FTP Server HostAddress:"+ soc.getInetAddress().getHostName());
+       // System.out.println("FTP Server Started on Port Number :"+port);
       
-        hostAddressTxt.setText(hostAddress);
+       // hostAddressTxt.setText(hostAddress);
+       hostAddressTxt.setText("127.0.0.1");
         portNumberTxt.setText(Integer.toString(port));
         serverDirectoryTxt.setText(dir);
         
@@ -52,19 +54,24 @@ public class MainServerView extends javax.swing.JFrame {
      t=   new Thread(new Runnable() {
 			@Override
 			public void run() {
+                            
 	while(true)
         {
             System.out.println("Waiting for Connection ...\n");
              try {
                   
                     transferFileServer=new TranferFileServerThread(soc.accept(),serverDirectory);
-                    transferFileServer.setServerFileListToServer(jListServerModel);
+                    transferFileServer.setServerFileListToServer(jListServerModel,hostAddressTxt);
+                   
+                    System.out.println("Host address: "+transferFileServer.getSocketHostAddress());
+                    // hostAddressTxt.setText(transferFileServer.getSocketHostAddress());
                  } catch (IOException ex) {
                   Logger.getLogger(MainServerView.class.getName()).log(Level.SEVERE, null, ex);
                  }
 
         }
-			}
+         
+}
 	   });
      t.start();
      
@@ -81,8 +88,8 @@ public class MainServerView extends javax.swing.JFrame {
        
         
             
-                 //updateUIData();
-        listFilesonServer(new File(dir));
+        updateUIData();
+       
         
         
     }

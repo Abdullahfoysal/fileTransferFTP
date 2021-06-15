@@ -24,6 +24,7 @@ public class TranferFileServerThread extends Thread{
     DataOutputStream dout;
     String serverDirectory="/Users/foysalmac/Desktop/server";
     DefaultListModel<String> jListServerModel;
+    javax.swing.JLabel hostAddressTxt;
 
     TranferFileServerThread(Socket soc,String serverDirector)
     {
@@ -34,6 +35,8 @@ public class TranferFileServerThread extends Thread{
             ClientSoc=soc;                        
             din=new DataInputStream(ClientSoc.getInputStream());
             dout=new DataOutputStream(ClientSoc.getOutputStream());
+             System.out.println("FTP Server HostAddress:"+ ClientSoc.getInetAddress().getHostName());
+        System.out.println("FTP Server Started on Port Number :"+ClientSoc.getPort());
             System.out.println("FTP Client Connected ...\n");
             start();
 
@@ -44,10 +47,13 @@ public class TranferFileServerThread extends Thread{
     }
     
    String getSocketHostAddress(){
+       System.out.println("calling get socket Host address");
        return ClientSoc.getInetAddress().getHostName();
    }
-    void setServerFileListToServer(DefaultListModel<String> jListServerModel){
+    void setServerFileListToServer(DefaultListModel<String> jListServerModel,javax.swing.JLabel hostAddressTxt){
         this.jListServerModel=jListServerModel;
+        this.hostAddressTxt= hostAddressTxt;
+        this.hostAddressTxt.setText(getSocketHostAddress()+"kdfaksdka");
     }
     void SendFile() throws Exception
     {        
