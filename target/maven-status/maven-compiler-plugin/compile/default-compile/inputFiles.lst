@@ -1,4 +1,8 @@
-/Users/foysalmac/Documents/netbeans/fileTransfer/src/main/java/com/swe/filetransfer/server/ftpServer.java
-/Users/foysalmac/Documents/netbeans/fileTransfer/src/main/java/com/swe/filetransfer/server/tranferFileServerThread.java
+/Users/foysalmac/Documents/netbeans/fileTransfer/src/main/java/com/swe/filetransfer/server/MainServerView.java
+/Users/foysalmac/Documents/netbeans/fileTransfer/src/main/java/com/swe/filetransfer/client/ClientInitialView.java
+/Users/foysalmac/Documents/netbeans/fileTransfer/src/main/java/com/swe/filetransfer/server/ServerInitialView.java
+/Users/foysalmac/Documents/netbeans/fileTransfer/src/main/java/com/swe/filetransfer/server/TranferFileServerThread.java
 /Users/foysalmac/Documents/netbeans/fileTransfer/src/main/java/com/swe/filetransfer/client/ftpClient.java
+/Users/foysalmac/Documents/netbeans/fileTransfer/src/main/java/com/swe/filetransfer/client/MainClientView.java
+/Users/foysalmac/Documents/netbeans/fileTransfer/src/main/java/com/swe/filetransfer/server/FtpServer.java
 /Users/foysalmac/Documents/netbeans/fileTransfer/src/main/java/com/swe/filetransfer/client/transferFileClient.java

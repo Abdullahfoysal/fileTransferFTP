@@ -37,13 +37,9 @@ public class MainClientView extends javax.swing.JFrame {
       this.port=port;
       
       initComponents();
-      
-     
-      
-     
-      
+            
         try {
-            soc = new Socket("127.0.0.1",port);
+            soc = new Socket(host,port);
         } catch (IOException ex) {
             Logger.getLogger(MainClientView.class.getName()).log(Level.SEVERE, null, ex);
         }
