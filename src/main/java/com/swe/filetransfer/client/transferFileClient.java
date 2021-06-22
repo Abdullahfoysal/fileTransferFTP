@@ -45,106 +45,7 @@ public class transferFileClient {
             System.out.println(ex);
         }        
     }
-//      void SendFile() throws Exception
-//    {        
-//
-//        String filename;
-//        System.out.print("Enter File Name :\n");
-//        filename=br.readLine();
-//       
-//
-//        File f=new File(clientDirectory+filename);
-//        if(!f.exists())
-//        {
-//            System.out.println("File not Exists...\n");
-//            dout.writeUTF("File not found\n");
-//            return;
-//        }
-//
-//        dout.writeUTF(filename);
-//        pw.println(filename);
-//
-//        String msgFromServer=din.readUTF();
-//        
-//         System.out.println("Message from server: "+msgFromServer);
-//         
-//        if(msgFromServer.compareTo("File Already Exists")==0)
-//        {
-//            String Option;
-//            System.out.println("File Already Exists. Want to OverWrite (Y/N) ?\n");
-//            Option=br.readLine();            
-//            if(Option=="Y")    
-//            {
-//                dout.writeUTF("Y");
-//            }
-//            else
-//            {
-//                dout.writeUTF("N");
-//                return;
-//            }
-//        }
-//
-//        System.out.println("Sending File ...\n");
-//        FileInputStream fin= new FileInputStream(f);
-//        int ch;
-//        do
-//        {
-//            ch=fin.read();
-//            dout.writeUTF(String.valueOf(ch));
-//        }
-//        while(ch!=-1);
-//        fin.close();
-//        System.out.println(din.readUTF());
-//
-//    }
-//
-//    void ReceiveFile() throws Exception
-//    {
-//        String fileName;
-//        System.out.print("Enter File Name :\n");
-//        fileName=br.readLine();
-//        dout.writeUTF(fileName);
-//        String msgFromServer=din.readUTF();
-//
-//        if(msgFromServer.compareTo("File Not Found")==0)
-//        {
-//            System.out.println("File not found on Server ...\n");
-//            return;
-//        }
-//        else if(msgFromServer.compareTo("READY")==0)
-//        {
-//            System.out.println("Receiving File ...\n");
-//            File f=new File(clientDirectory+fileName);
-//            if(f.exists())
-//            {
-//                String Option;
-//                System.out.println("File Already Exists. Want to OverWrite (Y/N) ?\n");
-//                Option=br.readLine();            
-//                if(Option=="N")    
-//                {
-//                    dout.flush();
-//                    return;    
-//                }                
-//            }
-//            FileOutputStream fout=new FileOutputStream(f);
-//            int ch;
-//            String temp;
-//            do
-//            {
-//                temp=din.readUTF();
-//                ch=Integer.parseInt(temp);
-//                if(ch!=-1)
-//                {
-//                    fout.write(ch);                    
-//                }
-//            }while(ch!=-1);
-//            fout.close();
-//            System.out.println(din.readUTF());
-//
-//        }
-//
-//
-//    }
+
     
     String getSplitedFileName(String fileDir){
         String[] namesList = fileDir.split("/");
@@ -274,22 +175,7 @@ public class transferFileClient {
         
 
        
-         // System.out.println("Message from server: "+msgFromServer);
-//        if(msgFromServer.compareTo("File Already Exists")==0)
-//        {
-//            String Option;
-//            System.out.println("File Already Exists. Want to OverWrite (Y/N) ?\n");
-//            Option=br.readLine();            
-//            if(Option=="Y")    
-//            {
-//                dout.writeUTF("Y");
-//            }
-//            else
-//            {
-//                dout.writeUTF("N");
-//                return;
-//            }
-//        }
+ 
 
  String msgFromServer=din.readUTF();
  

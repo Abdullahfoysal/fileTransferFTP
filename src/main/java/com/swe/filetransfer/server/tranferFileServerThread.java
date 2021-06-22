@@ -26,7 +26,7 @@ public class TranferFileServerThread extends Thread{
     DefaultListModel<String> jListServerModel;
     javax.swing.JLabel hostAddressTxt;
 
-    TranferFileServerThread(Socket soc,String serverDirector)
+    TranferFileServerThread(Socket soc,String serverDirectory)
     {
         this.serverDirectory=serverDirectory;
         this.jListServerModel=jListServerModel;
@@ -53,7 +53,7 @@ public class TranferFileServerThread extends Thread{
     void setServerFileListToServer(DefaultListModel<String> jListServerModel,javax.swing.JLabel hostAddressTxt){
         this.jListServerModel=jListServerModel;
         this.hostAddressTxt= hostAddressTxt;
-        this.hostAddressTxt.setText(getSocketHostAddress()+"kdfaksdka");
+       // this.hostAddressTxt.setText(getSocketHostAddress()+"kdfaksdka");
     }
     void SendFile() throws Exception
     {        
@@ -260,18 +260,7 @@ public class TranferFileServerThread extends Thread{
                  
             }
             
-//            if(Command.compareTo("GET")==0)
-//            {
-//                System.out.println("\tGET Command Received ...\n");
-//                SendFile();
-//                continue;
-//            }
-//            else if(Command.compareTo("SEND")==0)
-//            {
-//                System.out.println("\tSEND Command Receiced ...\n");  
-//                ReceiveFile();
-//                continue;
-//            }
+
             else if(Command.compareTo("DISCONNECT")==0)
             {
                 System.out.println("\t Disconnect Command Received ...\n");
@@ -285,38 +274,6 @@ public class TranferFileServerThread extends Thread{
     }
     
 
-//    @Override
-//    public void run()
-//    {
-//        while(true)
-//        {
-//            try
-//            {
-//           // System.out.println("Waiting for Command ...\n");
-//            String Command=din.readUTF();
-//            System.out.println("Server geeting this message form client :"+Command);
-//            if(Command.compareTo("GET")==0)
-//            {
-//                System.out.println("\tGET Command Received ...\n");
-//                SendFile();
-//                continue;
-//            }
-//            else if(Command.compareTo("SEND")==0)
-//            {
-//                System.out.println("\tSEND Command Receiced ...\n");  
-//                ReceiveFile();
-//                continue;
-//            }
-//            else if(Command.compareTo("DISCONNECT")==0)
-//            {
-//                System.out.println("\t Disconnect Command Received ...\n");
-//                System.exit(1);
-//            }
-//            }
-//            catch(Exception ex)
-//            {
-//            }
-//        }
-//    }
-//    
+
+  
 }
